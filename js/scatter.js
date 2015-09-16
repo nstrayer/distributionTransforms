@@ -4,6 +4,8 @@ function scatter() {
     var width = 500;
     var height = 500;
     var padding = 20;
+    var animationDuration = 1000
+    var delayValue = 15
     var pointsColor = "steelblue"
     var fillColor = 'coral';
     var data = [];
@@ -18,7 +20,12 @@ function scatter() {
 
             // I am assuming that the data passed includes a x and y field.
             var extent_x = d3.extent(data,function(d){return d.x});
+            //if the values are the same let's make sure the visualization puts it in the middle of the screen
+            if((extent_x[0] - extent_x[1]) == 0){extent_x =[extent_x[1] - 1, extent_x[1] + 1] }
+
             var extent_y = d3.extent(data,function(d){return d.y});
+            //if the values are the same let's make sure the visualization puts it in the middle of the screen
+            if((extent_y[0] - extent_y[1]) == 0){extent_y =[extent_y[1] - 1, extent_y[1]] }
 
             var scale_x = d3.scale.linear()
                 .domain(extent_x)
@@ -44,28 +51,30 @@ function scatter() {
                 .attr('r', 5) //this will eventually need to be modifyable by the code.
                 .attr('fill', pointsColor)
 
-
             // update functions
             updateWidth = function() {
                 scale_x.range([padding, width-padding]); //update the scale function
-                points.transition().duration(1000).attr('cx', function (d) { return scale_x(d.x);  })
-                svg.transition().duration(1000).attr('width', width);
+                points.transition().duration(animationDuration).attr('cx', function (d) { return scale_x(d.x);  })
+                svg.transition().duration(animationDuration).attr('width', width);
             };
 
             updateHeight = function() {
                 scale_y.range([height-padding, padding]); //update the scale
-                points.transition().duration(1000).attr('cy', function (d) { return scale_y(d.y);  }) //move the dots
-                svg.transition().duration(1000).attr('height', height); //update the svg
+                points.transition().duration(animationDuration).attr('cy', function (d) { return scale_y(d.y);  }) //move the dots
+                svg.transition().duration(animationDuration).attr('height', height); //update the svg
             };
 
             updateFillColor = function() {
-                svg.transition().duration(1000).style('fill', fillColor);
+                svg.transition().duration(animationDuration).style('fill', fillColor);
             };
 
             updateData = function() {
                 //calculate new data extents
                 var extent_x = d3.extent(data,function(d){return d.x});
+                if((extent_x[0] - extent_x[1]) == 0){extent_x =[extent_x[1] - 1, extent_x[1] + 1] }
+
                 var extent_y = d3.extent(data,function(d){return d.y});
+                if((extent_y[0] - extent_y[1]) == 0){extent_y =[extent_y[1] - 1, extent_y[1] ] }
 
                 //update the scales with the new extents
                 scale_x.domain(extent_x)
@@ -76,7 +85,8 @@ function scatter() {
 
                 update
                     .transition()
-                    .duration(1000)
+                    .duration(animationDuration)
+                    .delay(function(d, i) { return (data.length - i) * 15; })
                     .attr('cx', function (d) { return scale_x(d.x);  })
                     .attr('cy', function (d) { return scale_y(d.y);  })
 
@@ -88,7 +98,8 @@ function scatter() {
                     .attr('r', 0)
                     .attr('fill', pointsColor)
                     .transition()
-                    .duration(1000)
+                    .duration(animationDuration)
+                    .delay(function(d, i) { return (data.length - i) * 15; })
                     .attr('cx', function (d) { return scale_x(d.x);  })
                     .attr('cy', function (d) { return scale_y(d.y);  })
                     .attr('r', 5) //this will eventually need to be modifyable by the code.
@@ -96,7 +107,7 @@ function scatter() {
                 update.exit()
                     .transition()
                     .duration(650)
-                    .delay(function(d, i) { return (data.length - i) * 20; })
+                    .delay(function(d, i) { return (data.length - i) * 15; })
                     .attr('r', 0)
                     .remove();
             }
@@ -129,6 +140,13 @@ function scatter() {
         if (!arguments.length) return data;
         data = value;
         if (typeof updateData === 'function') updateData();
+        return chart;
+    };
+
+    chart.animationDuration = function(value) {
+        if (!arguments.length) return animationDuration;
+        animationDuration = value;
+        if (typeof animationDuration === 'function') animationDuration();
         return chart;
     };
 
