@@ -41,3 +41,13 @@ strong.choosen{
 .groupings.selected {
   color: "red";
 }
+
+#next {
+    font-weight: bold;
+    color: steelblue;
+    font-size: 20;
+}
+
+#text {
+    font-size: 16;
+}
