@@ -25,7 +25,10 @@ d3.csv("data/normalData.csv", function(orig_data){
     var state3 = JSON.parse(JSON.stringify(orig_data)); //it's hard to clone an object!
     state3.forEach(function(d){ d.x = 1 })
 
-    var states = [state1, orig_data, state3]
+    var states = [{"desc": "Start with some points drawn from the normal distribution.", "data": state1},
+                  {"desc": "Drop those points (transform them) onto the CDF of the normal...", "data":orig_data},
+                  {"desc": "...and end up with uniformly distributed points.", "data":state3}
+              ]
 
     var updatableChart = scatter()
         .width(width).height(height)
@@ -37,12 +40,14 @@ d3.csv("data/normalData.csv", function(orig_data){
 
     var i = 1;
     window.setTimeout(function() {
-        updatableChart.data(states[i]);
+        updatableChart.data(states[i].data);
+        d3.select("#description").text(states[i].desc)
         i = i+1
-    }, 500);
+    }, 1500);
 
     window.setInterval(function() {
-        updatableChart.data(states[i]);
+        updatableChart.data(states[i].data);
+        d3.select("#description").text(states[i].desc)
         i = (i+1) % 3 ;
     }, 5500);
 })
