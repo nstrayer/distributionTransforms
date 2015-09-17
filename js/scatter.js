@@ -4,6 +4,7 @@ function scatter() {
     var width = 500;
     var height = 500;
     var padding = 20;
+    var radius = 4;
     var animationDuration = 1000
     var delayValue = 15
     var pointsColor = "steelblue"
@@ -48,7 +49,7 @@ function scatter() {
                 .attr('class', 'display-points')
                 .attr('cx', function (d) { return scale_x(d.x);  })
                 .attr('cy', function (d) { return scale_y(d.y);  })
-                .attr('r', 5) //this will eventually need to be modifyable by the code.
+                .attr('r', radius) //this will eventually need to be modifyable by the code.
                 .attr('fill', pointsColor)
 
             // update functions
@@ -102,7 +103,7 @@ function scatter() {
                     .delay(function(d, i) { return (data.length - i) * 15; })
                     .attr('cx', function (d) { return scale_x(d.x);  })
                     .attr('cy', function (d) { return scale_y(d.y);  })
-                    .attr('r', 5) //this will eventually need to be modifyable by the code.
+                    .attr('r', radius) //this will eventually need to be modifyable by the code.
 
                 update.exit()
                     .transition()
