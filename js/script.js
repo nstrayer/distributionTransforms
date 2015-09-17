@@ -6,7 +6,7 @@ d3.selection.prototype.moveToFront = function() {
 };
 
 var width = parseInt(d3.select("#viz").style("width").slice(0, -2)),
-    height = $(window).height() - 85;
+    height = $(window).height() - 120;
 //
 
 d3.csv("data/normalData.csv", function(orig_data){
@@ -39,15 +39,17 @@ d3.csv("data/normalData.csv", function(orig_data){
       .call(updatableChart);
 
     var i = 1;
-    window.setTimeout(function() {
-        updatableChart.data(states[i].data);
-        d3.select("#description").text(states[i].desc)
-        i = i+1
-    }, 1500);
 
-    window.setInterval(function() {
+    function nextButton(){
         updatableChart.data(states[i].data);
         d3.select("#description").text(states[i].desc)
+        // if(i == 3){
+        //     d3.select("#next").text("Start over.")
+        // }else if(i == 0){
+        //     d3.select("#next").text("Next.")
+        // }
         i = (i+1) % 3 ;
-    }, 5500);
+    }
+    d3.select("#next").on("click",nextButton)
+
 })
