@@ -51,3 +51,26 @@ strong.choosen{
 #text {
     font-size: 16;
 }
+
+.top {
+    height: 100;
+}
+
+.top #chooseText {
+    font-size: 18;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+span.selected {
+    color: steelblue;
+    font-weight: bold;
+}
+#choose {
+    font-size: 20;
+    font-style: oblique;
+}
+/*#menu {
+    border-left: 1px solid;
+}*/
