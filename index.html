@@ -11,16 +11,28 @@
 <!-- <script src="http://d3js.org/queue.v1.min.js"></script> -->
 
 <div id = "header"  class = "col-md-12">
-    <div class = "col-md-12">
+    <div class = "top col-md-6">
         <h1>Transformers, Distributions in Disguise!</h1>
         <hr>
     </div>
+    <div id = "menu" class = "top col-md-6">
+        <span id = "chooseText">
+            <span id = "choose">Choose your transformation:</span>
+            <span id = "chiSquared" fileName = "chiSquaredVals.csv" class = "typeChoose selected">Normal -> Chi-Squared</span> ,
+            <span id = "normal" fileName = "normalData.csv" class = "typeChoose">Normal -> Uniform</span>
+            <hr>
+        </span>
+
+    </div>
+</div>
+<div id = "description" class = "col-md-12">
     <div id = "text" class = "col-md-5">
         <span id = "description">Start with some points drawn from the normal distribution.</span>
     </div>
     <div class = "col-md-2">
         <span id = "next">Next</span>
     </div>
+</div>
 
 </div>
 <div id = "viz" class = "col-md-12 col-sm-12"></div>
